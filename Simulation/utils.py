@@ -1,5 +1,6 @@
 import numpy as np
 import mujoco
+from scipy.spatial.transform import Rotation as R
 
 
 def CPG(dt: float, a: float, mu: np.ndarray, omega: np.ndarray, psi: np.ndarray, r: np.ndarray, theta: np.ndarray, phi: np.ndarray, r_dot: np.ndarray):
@@ -209,7 +210,7 @@ def visual_foot_pos(scene,target_pos: np.ndarray, data: mujoco.MjData, rgba: np.
     add_visual_sphere(scene, point=point3, radius=0.03, rgba=rgba)
     add_visual_sphere(scene, point=point4, radius=0.03, rgba=rgba)
 
-    
+
 class Box:
     def __init__(self, dim, low=None, high=None):
         self.low = low
