@@ -168,7 +168,48 @@ def Joint_safty(joint_q: np.ndarray, hip_limit: np.ndarray, thigh_limit: np.ndar
     
     return clipped_joint_q
 
+def add_visual_sphere(scene, point: np.ndarray, radius: float, rgba: np.ndarray):
+    if scene.ngeom >= scene.maxgeom:
+        return
+    scene.ngeom += 1  # increment ngeom
+    # initialise a new capsule, add it to the scene using mjv_connector
+    mujoco.mjv_initGeom(scene.geoms[scene.ngeom-1],
+                        type=mujoco.mjtGeom.mjGEOM_SPHERE,
+                        size=[radius, 0, 0],
+                        pos=point,
+                        mat=np.eye(3).flatten(),
+                        rgba=rgba
+                        )
+def rotate_point(point, quaternion):
+    # Convert the quaternion to a rotation object
+    quaternion = np.array([quaternion[1],quaternion[2],quaternion[3],quaternion[0]], dtype=np.float64)
+    quaternion /= np.linalg.norm(quaternion)
+    rotation = R.from_quat(quaternion)
+    
+    # Apply the rotation to the point
+    rotated_point = rotation.apply(point)
+    
+    return rotated_point
 
+def visual_foot_pos(scene,target_pos: np.ndarray, data: mujoco.MjData, rgba: np.ndarray):
+    FR_foot_pos = target_pos[0] + np.array([0.183,-0.047,0.0])
+    FL_foot_pos = target_pos[1] + np.array([0.183,0.047,0.0])
+    RR_foot_pos = target_pos[2] + np.array([-0.183,-0.047,0.0])
+    RL_foot_pos = target_pos[3] + np.array([-0.183,0.047,0.0])
+    point1 = rotate_point(FR_foot_pos, data.body("trunk").xquat)
+    point2 = rotate_point(FL_foot_pos, data.body("trunk").xquat)
+    point3 = rotate_point(RR_foot_pos, data.body("trunk").xquat)
+    point4 = rotate_point(RL_foot_pos, data.body("trunk").xquat)
+    point1 = point1 + data.body("trunk").xpos
+    point2 = point2 + data.body("trunk").xpos
+    point3 = point3 + data.body("trunk").xpos
+    point4 = point4 + data.body("trunk").xpos
+    add_visual_sphere(scene, point=point1, radius=0.03, rgba=rgba)
+    add_visual_sphere(scene, point=point2, radius=0.03, rgba=rgba)
+    add_visual_sphere(scene, point=point3, radius=0.03, rgba=rgba)
+    add_visual_sphere(scene, point=point4, radius=0.03, rgba=rgba)
+
+    
 class Box:
     def __init__(self, dim, low=None, high=None):
         self.low = low

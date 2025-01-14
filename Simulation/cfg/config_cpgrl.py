@@ -1,9 +1,6 @@
-from dataclasses import dataclass
 from typing import List, Union
 import json
-
 from dataclasses import dataclass, field
-from typing import List
 import numpy as np
 # dataclassの定義
 @dataclass

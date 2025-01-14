@@ -16,7 +16,7 @@ def json_to_dataclass(file_path="config.json"):
 
 
 if __name__ == "__main__":
-    from config import Config
+    from Simulation.cfg.config_cpgrl import Config
     # configの作成
     config = Config()
     print(config)

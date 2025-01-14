@@ -22,7 +22,7 @@ sys.path.append(parent_dir2)
 from SoftActorCritic.SAC import SAC
 from SoftActorCritic.ReplayMemory import ReplayMemory
 from A1_CPGEnv import A1CPGEnv
-from cfg.config import Config
+from cfg.config_cpgrl import Config
 from cfg.Save_Load_cfg import dataclass_to_json
 
 

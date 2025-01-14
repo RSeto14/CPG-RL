@@ -24,7 +24,7 @@ script_name = os.path.basename(__file__)[: -len(".py")]
 
 from SoftActorCritic.SAC import SAC_Eval
 from A1_CPGEnv import A1CPGEnv
-from cfg.config import Config
+from Simulation.cfg.config_cpgrl import Config
 from cfg.Save_Load_cfg import json_to_dataclass,dataclass_to_json
 
 def Parse_args():
