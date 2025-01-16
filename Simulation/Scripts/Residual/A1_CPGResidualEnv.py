@@ -347,7 +347,7 @@ class A1CPGEnv():
     
         for i in range(self.nn_per_mjc):
             if i % self.ctrl_per_mjc == 0:
-                self.r, self.theta, self.phi, self.r_dot = CPG(self.dt, self.a, self.mu, self.omega, self.psi, self.r, self.theta, self.phi, self.r_dot, self.r_ddot)
+                self.r, self.theta, self.phi, self.r_dot, self.r_ddot = CPG(self.dt, self.a, self.mu, self.omega, self.psi, self.r, self.theta, self.phi, self.r_dot, self.r_ddot)
                 target_pos = Trajectory(self.h,self.gc,self.gp,self.d_step,self.r,self.theta,self.phi)
                 target_q = Inverse_kinematics(target_pos)
                 self.e_q = self.e_q + self.dt * self.ctrl_per_mjc * self.e_dq

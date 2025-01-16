@@ -15,7 +15,7 @@ def CPG(dt: float, a: float, mu: np.ndarray, omega: np.ndarray, psi: np.ndarray,
     theta = theta%(2*np.pi)
     phi = phi%(2*np.pi)
     
-    return r, theta, phi, r_dot
+    return r, theta, phi, r_dot, r_ddot
 
 
 
