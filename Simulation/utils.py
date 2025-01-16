@@ -3,10 +3,11 @@ import mujoco
 from scipy.spatial.transform import Rotation as R
 
 
-def CPG(dt: float, a: float, mu: np.ndarray, omega: np.ndarray, psi: np.ndarray, r: np.ndarray, theta: np.ndarray, phi: np.ndarray, r_dot: np.ndarray):
+def CPG(dt: float, a: float, mu: np.ndarray, omega: np.ndarray, psi: np.ndarray, r: np.ndarray, theta: np.ndarray, phi: np.ndarray, r_dot: np.ndarray, r_ddot: np.ndarray):
     
-    r_dot = a*(a*(mu -r)/4 - r_dot)*dt
+    r_ddot = a*(a*(mu -r)/4 - r_dot)*dt
     
+    r_dot = r_dot + r_ddot*dt
     r = r_dot*dt + r
     theta = omega*dt + theta
     phi = psi*dt + phi

@@ -68,6 +68,7 @@ class A1CPGEnv():
         
         self.r = np.full(4, self.cfg.mu[0])
         self.r_dot = np.full(4, 0)
+        self.r_ddot = np.full(4, 0)
         self.theta = np.array([0,np.pi,np.pi,0])
         self.phi = np.array([0,0,0,0])
         
@@ -316,7 +317,7 @@ class A1CPGEnv():
     
         for i in range(self.nn_per_mjc):
             if i % self.ctrl_per_mjc == 0:
-                self.r, self.theta, self.phi, self.r_dot = CPG(self.dt, self.a, self.mu, self.omega, self.psi, self.r, self.theta, self.phi, self.r_dot)
+                self.r, self.theta, self.phi, self.r_dot = CPG(self.dt, self.a, self.mu, self.omega, self.psi, self.r, self.theta, self.phi, self.r_dot, self.r_ddot)
                 target_pos = Trajectory(self.h,self.gc,self.gp,self.d_step,self.r,self.theta,self.phi,self.x_offset)
                 target_q = Inverse_kinematics(target_pos)
                 target_q = Joint_safty(target_q, self.cfg.hip_limit, self.cfg.thigh_limit, self.cfg.calf_limit)
